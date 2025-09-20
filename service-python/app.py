@@ -1,10 +1,54 @@
-from flask import Flask
+from flask import Flask, Response
+import requests
+import os, time, datetime, shutil
 
 app = Flask(__name__)
+start_time = time.time()
 
-@app.route("/ping")
-def ping():
-    return "Hello from Python Flask!"
+VOLUME_PATH = '/vStorage'
+os.makedirs(VOLUME_PATH, exist_ok=True)
+LOG_FILE = os.path.join(VOLUME_PATH, 'logs.text')
+
+STORAGE_URL = 'http://storage:5000/log'
+
+def get_timestamp2():
+    uptime_hours = "{:.2f}".format((time.time() - start_time)/3600)
+    total, used, free = shutil.disk_usage('/')
+    free_mb = round(free/(1024*1024))
+    time_stamp = datetime.datetime.utcnow().replace(microsecond=0).isoformat() + 'Z'
+    return f"Timestamp2: {time_stamp}: uptime {uptime_hours} hours, free disk in root: {free_mb} MBytes"
+
+def log_to_vstorage(record):
+    with open(LOG_FILE, 'a', encoding='utf-8') as f:
+        f.write(record + '\n')
+
+def post_to_storage(record):
+    try:
+        requests.post(STORAGE_URL, data=record, headers={'Content-Type': 'text/plain'}, timeout=2)
+    except Exception as e:
+        print(f"Could not POST to Storage: {e}")
+
+def log_request(req_path):
+    ts = datetime.datetime.utcnow().replace(microsecond=0).isoformat() + 'Z'
+    entry = f"{ts} - {req_path}"
+    log_to_vstorage(entry)
+
+    return entry
+
+@app.route('/status', methods=['GET'])
+def status():
+    ts2 = get_timestamp2()
+    post_to_storage(ts2)
+    log_to_vstorage(ts2)
+    return Response(ts2, mimetype='text/plain')
+
+@app.route('/log', methods = ['GET'])
+def log():
+    if not os.path.exists(LOG_FILE):
+        return Response('', mimetype='text/plain')
+    with open(LOG_FILE, 'r', encoding='utf-8') as f:
+        content = f.read()
+        return Response(content, mimetype='text/plain')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
