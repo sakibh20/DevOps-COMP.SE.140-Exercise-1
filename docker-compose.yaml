@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  service-python:
+    build: ./service-python
+    container_name: python_service
+    ports:
+      - "5000:5000"
+
+  service-node:
+    build: ./service-node
+    container_name: node_service
+    ports:
+      - "3000:3000"
+    depends_on:
+      - service-python
