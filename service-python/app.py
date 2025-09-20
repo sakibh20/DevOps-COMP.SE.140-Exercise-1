@@ -1,6 +1,5 @@
 from flask import Flask, Response
-import requests
-import os, time, datetime, shutil
+import requests, os, time, datetime, shutil
 
 app = Flask(__name__)
 start_time = time.time()
@@ -28,27 +27,12 @@ def post_to_storage(record):
     except Exception as e:
         print(f"Could not POST to Storage: {e}")
 
-def log_request(req_path):
-    ts = datetime.datetime.utcnow().replace(microsecond=0).isoformat() + 'Z'
-    entry = f"{ts} - {req_path}"
-    log_to_vstorage(entry)
-
-    return entry
-
 @app.route('/status', methods=['GET'])
 def status():
     ts2 = get_timestamp2()
     post_to_storage(ts2)
     log_to_vstorage(ts2)
     return Response(ts2, mimetype='text/plain')
-
-@app.route('/log', methods = ['GET'])
-def log():
-    if not os.path.exists(LOG_FILE):
-        return Response('', mimetype='text/plain')
-    with open(LOG_FILE, 'r', encoding='utf-8') as f:
-        content = f.read()
-        return Response(content, mimetype='text/plain')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
