@@ -1,20 +1,24 @@
 services:
   gateway:
     build: ./service-node
+    volumes:
+      - ./vstorage:/vStorage
     ports:
       - "8199:3000"
+
   app:
     build: ./service-python
     volumes:
-      - vStorage:/vStorage
+      - ./vstorage:/vStorage
     networks:
       - default
+
   storage:
     build: ./service-storage
     volumes:
       - storageVolume:/storage
     networks:
       - default
+
 volumes:
-  vStorage:
   storageVolume:

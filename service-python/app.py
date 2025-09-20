@@ -6,7 +6,7 @@ start_time = time.time()
 
 VOLUME_PATH = '/vStorage'
 os.makedirs(VOLUME_PATH, exist_ok=True)
-LOG_FILE = os.path.join(VOLUME_PATH, 'logs.text')
+LOG_FILE = os.path.join(VOLUME_PATH, 'logs.txt')
 
 STORAGE_URL = 'http://storage:5000/log'
 
