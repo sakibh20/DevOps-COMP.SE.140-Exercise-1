@@ -75,7 +75,7 @@ app.get('/status', async (req, res) => {
 
 app.get('/log', async (req, res) => {
   try {
-    const resp = await axios.get('http://storage:5000/log', { responseType: 'text' });
+    const resp = await axios.get('http://storage:5000/log', { responseType: 'text', timeout: 2000 });
     res.set('Content-Type', 'text/plain');
     res.send(resp.data);
   } catch (err) {
