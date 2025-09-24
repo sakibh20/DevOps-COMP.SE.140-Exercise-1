@@ -4,9 +4,9 @@ import requests, os, time, datetime, shutil
 app = Flask(__name__)
 start_time = time.time()
 
-VOLUME_PATH = '/vStorage'
-os.makedirs(VOLUME_PATH, exist_ok=True)
-LOG_FILE = os.path.join(VOLUME_PATH, 'logs.txt')
+LOG_FILE = '/vStorage'
+#os.makedirs(VOLUME_PATH, exist_ok=True)
+#LOG_FILE = os.path.join(VOLUME_PATH, 'logs.txt')
 
 STORAGE_URL = 'http://storage:5000/log'
 

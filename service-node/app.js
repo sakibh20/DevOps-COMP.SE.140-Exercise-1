@@ -8,9 +8,9 @@ const execAsync = util.promisify(exec);
 
 const app = express();
 
-const VOLUME_PATH = '/vStorage';
-fs.mkdirSync(VOLUME_PATH, { recursive: true });
-const LOG_FILE = path.join(VOLUME_PATH, 'logs.txt');
+const LOG_FILE = '/vStorage';
+//fs.mkdirSync(VOLUME_PATH, { recursive: true });
+//const LOG_FILE = path.join(VOLUME_PATH, 'logs.txt');
 
 async function getFreeDiskInMB() {
   try {
