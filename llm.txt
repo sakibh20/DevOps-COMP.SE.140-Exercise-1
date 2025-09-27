@@ -1,0 +1,19 @@
+The used LLM toolMotivation/reason to use LLM
+- I am quite new to web technologies. I am familiar with the languages but needed to learn how the framework works.
+I used Flask and express for this exercise. I could also learn using documentations. But sometime documentation 
+contains a huge number of information and finding the one I want become difficult. So, I wanted to have a concise 
+ask and learn type pattern. So, I chose to use LLM.
+
+How and why LLM helped
+- I used Flask and express for this exercise. I started with implementing simple functionalities like simple REST 
+APIS and how to set docker workflow. Then I extended that to my actual requirements. It was a great help. Now, 
+I know how these works. I still don't remember all the syntax that I used but I understand most that I used.
+
+What kind of mistakes LLM did
+- This is amazing that, LLMs don't make much mistakes anymore specially about programming part. It did provide 
+almost everyting right I asked. Sometime, I failed to specify the actual constrains. Then it went a bit side ways. 
+Other than that is was super helpful.
+
+What were things that LLM was not able to provide
+- Whatever I asked, it provided. I needed some idea how I can present the whole system with a diagram. It also gave
+an text based idea of that.
